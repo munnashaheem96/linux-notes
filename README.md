@@ -973,3 +973,95 @@ sort students.txt
 ---
 
 *Linux Learning Notes | Beginner to Intermediate*
+
+---
+
+# 13. Network, Process, IPC and Security Notes
+
+## 13.1 Network Commands
+
+| Command | Purpose |
+|---|---|
+| `ping <ip-address>` | Check whether a host responds over the network |
+| `ip addr` | Display network interfaces and IP addresses |
+| `ifconfig` | Display or configure network interfaces (legacy; may need to be installed) |
+| `lshw` | List hardware information (may require `sudo`) |
+
+`ipconfig` is the corresponding network-configuration command on Windows.
+
+## 13.2 Process and File Commands
+
+| Command | Purpose |
+|---|---|
+| `ps` | Display process information |
+| `jobs` | List jobs started in the current shell |
+| `kill <pid>` | Send a signal to a process, normally requesting it to stop |
+| `head <file>` | Display the first 10 lines of a file by default |
+| `tail <file>` | Display the last 10 lines of a file by default |
+| `less <file>` | Read a file one page at a time |
+| `more <file>` | Read a file page by page |
+
+## 13.3 Inter-Process Communication (IPC)
+
+IPC is how processes exchange data.
+
+### On a single system
+
+**Pipes** pass the output of one command to another:
+
+```bash
+command1 | command2 | command3
+```
+
+**Shared memory** lets processes access a common memory region. It is an IPC
+mechanism, not simply a shared file.
+
+### Between systems
+
+**Sockets** allow programs on different systems to communicate over a network.
+
+## 13.4 Security Basics
+
+### Authentication and users
+
+Authentication verifies a user's identity before allowing access to a system or
+service.
+
+Linux has a `root` superuser and regular user accounts. Administrative access is
+typically granted to regular users through privileges such as `sudo`; system
+and service accounts may also exist.
+
+The `/etc/passwd` file contains account information and can be viewed with:
+
+```bash
+cat /etc/passwd
+```
+
+Each line uses this colon-separated format:
+
+```text
+<user-name>:<password-placeholder>:<user-id>:<group-id>:<user-details>:<home-directory>:<default-shell>
+```
+
+The password field usually contains a placeholder; password hashes are stored
+separately in `/etc/shadow`, which is restricted to privileged access.
+
+### Groups
+
+Groups collect users so permissions can be granted to a set of users. Group
+information is listed in `/etc/group`:
+
+```bash
+cat /etc/group
+```
+
+### File permissions
+
+File permissions control access for the file owner, the group, and other users.
+Use `ls -l` to view permissions, `chmod` to change them, and `chown` to change
+ownership.
+
+### Encryption
+
+Encryption protects data by making it unreadable without the appropriate key.
+Use established tools and keep encryption keys private.
