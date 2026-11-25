@@ -1046,6 +1046,29 @@ Each line uses this colon-separated format:
 The password field usually contains a placeholder; password hashes are stored
 separately in `/etc/shadow`, which is restricted to privileged access.
 
+### Creating and removing users
+
+Create a user with either command:
+
+```bash
+sudo adduser <username>
+sudo useradd <username>
+```
+
+`adduser` is a higher-level, often interactive command. `useradd` is a lower-level
+command; its defaults and whether it creates a home directory depend on the
+system configuration.
+
+Remove a user with either command:
+
+```bash
+sudo deluser <username>
+sudo userdel <username>
+```
+
+These commands may leave the user's home directory and files in place. Check
+the command's options before removing a home directory or other user data.
+
 ### Groups
 
 Groups collect users so permissions can be granted to a set of users. Group
