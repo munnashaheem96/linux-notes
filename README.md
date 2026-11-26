@@ -1078,11 +1078,156 @@ information is listed in `/etc/group`:
 cat /etc/group
 ```
 
+Create a group with either command:
+
+```bash
+sudo groupadd <group-name>
+sudo addgroup <group-name>
+```
+
+Add an existing user to a group:
+
+```bash
+sudo usermod -aG <group-name> <username>
+```
+
+The user must log out and log back in for the new group membership to take
+effect in the current session.
+
+Remove a group with either command:
+
+```bash
+sudo groupdel <group-name>
+sudo delgroup <group-name>
+```
+
 ### File permissions
 
 File permissions control access for the file owner, the group, and other users.
 Use `ls -l` to view permissions, `chmod` to change them, and `chown` to change
 ownership.
+
+```bash
+ls -l
+```
+
+Example permission string:
+
+```text
+-rw-r--r--
+```
+
+The first character indicates the file type:
+
+- `-` – regular file
+- `d` – directory
+- `l` – symbolic link
+
+The remaining characters are divided into owner, group and others:
+
+```text
+owner  group  others
+rwx    r-x    r-x
+```
+
+- `r` – read
+- `w` – write
+- `x` – execute
+
+Each permission has a numeric value:
+
+```text
+r = 4
+w = 2
+x = 1
+```
+
+For example, `rwx` equals `7`, `rw-` equals `6`, `r-x` equals `5`, and `r--`
+equals `4`.
+
+### chmod
+
+Use `chmod` to set or change permissions.
+
+Numeric syntax:
+
+```bash
+chmod <owner-group-others> <file-or-directory>
+```
+
+Examples:
+
+```bash
+chmod 755 script.sh
+chmod 644 notes.txt
+chmod 700 private.txt
+```
+
+- `755` – owner has read, write and execute; group and others have read and execute.
+- `644` – owner has read and write; group and others have read only.
+- `700` – owner has read, write and execute; group and others have no access.
+
+Symbolic syntax:
+
+```bash
+chmod <user-type><operator><permission> <file-or-directory>
+```
+
+- User types: `u` (owner), `g` (group), `o` (others), `a` (all)
+- Operators: `+` (add), `-` (remove), `=` (set exactly)
+- Permissions: `r`, `w`, `x`
+
+Examples:
+
+```bash
+chmod u+x script.sh      # Give the owner execute permission
+chmod g-w notes.txt      # Remove write permission from the group
+chmod o-r private.txt    # Remove read permission from others
+chmod a+r public.txt     # Give everyone read permission
+chmod u=rwx,g=rx,o=r file.txt
+```
+
+### chown
+
+`chown` changes a file or directory's owner and, optionally, its group:
+
+```bash
+sudo chown <owner> <file-or-directory>
+sudo chown <owner>:<group> <file-or-directory>
+```
+
+Examples:
+
+```bash
+sudo chown alice notes.txt
+sudo chown alice:developers project.txt
+```
+
+Use `-R` to change ownership recursively:
+
+```bash
+sudo chown -R alice:developers project/
+```
+
+### chgrp
+
+`chgrp` changes only the group that owns a file or directory:
+
+```bash
+sudo chgrp <group-name> <file-or-directory>
+```
+
+Example:
+
+```bash
+sudo chgrp developers project.txt
+```
+
+Use `-R` to change the group recursively:
+
+```bash
+sudo chgrp -R developers project/
+```
 
 ### Encryption
 
